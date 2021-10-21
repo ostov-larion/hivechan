@@ -1,0 +1,21 @@
+{
+  "name": "hivechan",
+  "version": "1.0.0",
+  "description": "Temporary anonymous nanoboard.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "nonoboard",
+    "anonymous",
+    "imageboard"
+  ],
+  "author": "ostov-larion",
+  "license": "MIT",
+  "dependencies": {
+    "enquirer": "^2.3.6",
+    "express": "^4.17.1",
+    "ngrok": "^4.2.2"
+  }
+}
