@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Temporary anonymous nanoboard.",
   "main": "index.js",
+  "bin": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -16,6 +17,6 @@
   "dependencies": {
     "enquirer": "^2.3.6",
     "express": "^4.17.1",
-    "ngrok": "^4.2.2"
+    "public-ip": "^4.0.4"
   }
 }

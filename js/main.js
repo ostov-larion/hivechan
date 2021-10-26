@@ -53,6 +53,10 @@ send = () => {
     document.querySelector("textarea").value = ""
 }
 
+openStorageWindow = () => {
+    window.open("storage.html","Storage",'width=600,height=400')
+}
+
 await update()
 
 document.querySelector("header").innerHTML = `<h1>${db.title}</h1>`

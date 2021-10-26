@@ -4,7 +4,7 @@ const fs = require("fs")
 const express = require('express')
 const path = require('path')
 const app = express()
-const ngrok = require('ngrok')
+const publicIP = require('public-ip')
 const { Select, Input, Password } = require('enquirer');
 
 /* Utils */
@@ -14,11 +14,11 @@ const getDirectories = path => fs.readdirSync(path).filter(file => fs.statSync(p
 const date = () => new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
 
 /* CLI */
-const logo = fs.readFileSync("logo.ascii", {encoding: "utf-8"})                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+const logo = fs.readFileSync("logo.ascii", {encoding: "utf-8"})
 console.log(`\u001b[36;1m${logo}\u001b[0m`)
 
 State = {posts: []}
- 
+
 const main = new Select({
   name: 'main',
   message: "Menu",
@@ -61,9 +61,8 @@ const run_server = async () => {
   })
   State.name = await name.run()
   runServer()
-  runProxy()
 }
- 
+
 main.run()
   .then(answer => {
     if(answer == 'Create new server') {
@@ -111,12 +110,8 @@ function runServer() {
   })
 
   app.listen(8080)
-}
-
-/* Run Reverse Proxy */
-async function runProxy() {
-  console.log("Running...")
-  let url = await ngrok.connect({addr: 8080})
-  console.log(`Server "${State.name}" successufully launched!`)
-  console.log(url)
+  console.log("Starting...")
+  publicIP.v6()
+  .then(ip => console.log(`Server "${State.name}" successufully launched!\n[${ip}]:8080`))
+  .catch(console.log)
 }
