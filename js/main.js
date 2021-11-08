@@ -1,5 +1,7 @@
 (async() => {
 
+window.top.document.querySelector("title").innerText = "Hivechan"
+
 if(!localStorage.poster) {
     localStorage.poster = Math.floor(Math.random() * 1000000)
 }
@@ -28,7 +30,7 @@ let renderPosts = posts => document.querySelector("main").innerHTML =
 
 update = async() => {
     db = await (await fetch("https://api.jsonstorage.net/v1/json/c6ad7afd-b319-4909-8b41-bc5c6491bd1e", {method: "GET"})).json()
-    renderPosts(db.posts)
+    renderPosts(db)
     document.querySelectorAll("img").forEach(img => img.onclick = () => window.open(img.src,img.alt,'width=600,height=400'))
 }
 
