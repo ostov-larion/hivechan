@@ -1,7 +1,5 @@
 (async() => {
 
-window.top.document.querySelector("title").innerText = "Hivechan"
-
 if(!localStorage.poster) {
     localStorage.poster = Math.floor(Math.random() * 1000000)
 }
@@ -42,7 +40,7 @@ uploadPost = async msg => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify([...db, {msg, date: date(), poster: localStorage.poster}])
+            body: JSON.stringify([...db, {msg, time: date(), poster: localStorage.poster}])
     }).then(() => update())
 }
 
