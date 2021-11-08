@@ -37,7 +37,7 @@ update = async() => {
 uploadPost = async msg => {
     await update()
     fetch("https://api.jsonstorage.net/v1/json/c6ad7afd-b319-4909-8b41-bc5c6491bd1e?apiKey=8fb8b49c-e22c-4c05-84a5-caee09624a9d", {
-            method: "UPDATE",
+            method: "PUT",
             headers: {
                 'Content-Type': 'application/json'
             },
