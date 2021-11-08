@@ -45,7 +45,7 @@ uploadPost = async msg => {
 }
 
 mute = n => {
-    localStorage.bl = JSON.stringify(JSON.parse(localStorage.bl).concat([db.posts[n].poster]))
+    localStorage.bl = JSON.stringify(JSON.parse(localStorage.bl).concat([db[n].poster]))
     update()
 }
 
