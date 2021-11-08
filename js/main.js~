@@ -18,7 +18,6 @@ let md = markdownIt({
     .use(markdownItSpoiler)
     .use(markdownItHtml5Media.html5Media)
 
-const date = () => new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
 
 let post = (msg, num, time) =>
     `<div class="post">
@@ -42,7 +41,7 @@ uploadPost = async msg => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify([...db, {msg, date: date(), poster: localStorage.poster}])
+            body: JSON.stringify([...db, {msg, poster: localStorage.poster}])
     }).then(() => update())
 }
 
