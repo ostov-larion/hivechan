@@ -30,7 +30,7 @@ let post = (msg, files, num, time) =>
             if(file[1].match(/video.*/))
                 return `<video src="${file[0]}" preload="none"></video>`
             else return `<img src="${file[0]}"></img>`
-        }).join('') : ""}
+        }).join(' ') : ""}
         ${md.render(msg)}
     </div>`
 
