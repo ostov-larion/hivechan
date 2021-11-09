@@ -7,6 +7,8 @@ if(!localStorage.bl) {
     localStorage.bl = "[]"
 }
 
+document.getElementById("theme-switch").innerText = `Make it ${localStorage.theme == "dark" ? "light" : "dark"}`
+
 let md = markdownIt({
     html:     false,
     xhtmlOut: false,
@@ -95,6 +97,10 @@ unmute = () => {
 let debug = msg => console.log(msg) || true
 
 send = () => {
+    if(document.querySelector("textarea").value == "" && document.getElementById("files").files.length == 0){
+        document.getElementById("status").innerText = "Нельзя отправлять пустые сообщения."
+        return false
+    }
     uploadPost(document.querySelector("textarea").value)
     document.querySelector("textarea").value = ""
 }
