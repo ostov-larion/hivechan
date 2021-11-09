@@ -25,7 +25,7 @@ const date = () => new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''
 
 let post = (msg, files, num, time) =>
     `<div class="post">
-        <b>Anonymous</b> <a name="${num}" onclick="document.querySelector('textarea').value += '\\n[#${num}](#${num})'">#${num}</a> <span style="color: gray">${time}</span> <a onclick="mute(${num})">Mute!</a>
+        <b>Anonymous</b> <a name="${num}" onclick="linkClick(${num})">#${num}</a> <span style="color: gray">${time}</span> <a onclick="mute(${num})">Mute!</a>
         ${files ? "<br>" + files.map(file => {
             if(file[1].match(/audio.*/))
                 return `<audio src="${file[0]}" preload="metadata"></audio>`
@@ -92,6 +92,17 @@ mute = n => {
 unmute = () => {
     localStorage.bl = "[]"
     update()
+}
+
+selection = ""
+
+window.onmousedown = () => {
+    selection = window.getSelection().toString()
+}
+
+linkClick = num => {
+    let value = document.querySelector('textarea').value
+    document.querySelector('textarea').value += `${value == "" ? "" : "\n"}[#${num}](#${num})\n> ${selection}\n\n`
 }
 
 let debug = msg => console.log(msg) || true
