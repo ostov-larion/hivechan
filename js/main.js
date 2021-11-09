@@ -15,8 +15,8 @@ let md = markdownIt({
     })
     .use(markdownItSpoiler)
     .use(markdownItHtml5Media.html5Media, {
-        videoAttrs: "preload=none",
-        audioAttrs: "preload=none"
+        videoAttrs: "preload=metadata",
+        audioAttrs: "preload=metadata"
     })
 
 const date = () => new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
@@ -26,9 +26,9 @@ let post = (msg, files, num, time) =>
         <b>Anonymous</b> <a name="${num}" onclick="document.querySelector('textarea').value += '\\n[#${num}](#${num})'">#${num}</a> <span style="color: gray">${time}</span> <a onclick="mute(${num})">Mute!</a>
         ${files ? "<br>" + files.map(file => {
             if(file[1].match(/audio.*/))
-                return `<audio src="${file[0]}" preload="none"></audio>`
+                return `<audio src="${file[0]}" preload="metadata"></audio>`
             if(file[1].match(/video.*/))
-                return `<video src="${file[0]}" preload="none"></video>`
+                return `<video src="${file[0]}" preload="metadata"></video>`
             else return `<img src="${file[0]}"></img>`
         }).join(' ') : ""}
         ${md.render(msg)}
@@ -40,7 +40,8 @@ let renderPosts = posts => document.querySelector("main").innerHTML =
 update = async() => {
     db = await (await fetch("https://api.jsonstorage.net/v1/json/c6ad7afd-b319-4909-8b41-bc5c6491bd1e", {method: "GET"})).json()
     renderPosts(db)
-    document.querySelectorAll("img").forEach(img => img.onclick = () => window.open(img.src,img.alt,'width=600,height=400'))
+    document.querySelectorAll("img").forEach(img => img.onclick = () => window.open(img.src,img.alt,`width=${img.naturalWidth/2},height=${img.naturalHeight/2}`))
+    document.querySelectorAll("video").forEach(img => img.onclick = () => window.open(img.src,img.alt,`width=${img.videoWidth},height=${img.videoHeight}`))
 }
 
 uploadFiles = async () => {
@@ -83,6 +84,11 @@ uploadPost = async msg => {
 
 mute = n => {
     localStorage.bl = JSON.stringify(JSON.parse(localStorage.bl).concat([db[n].poster]))
+    update()
+}
+
+unmute = () => {
+    localStorage.bl = "[]"
     update()
 }
 
