@@ -41,9 +41,10 @@
 		</header>
 		<main></main>
 		<div class="post">
-			<b>New Post</b> <a onclick="send()">Send</a> | <input type="file" id="files" multiple accept="image/*,video/*,audio/*"></input> | <a onclick="update()">Update</a> | <a onclick="unmute()">Unmute</a>
+			<b>New Post</b> <a onclick="send()">Send</a> & <a onclick="document.getElementById('files').click()">Pin files</a> | <a onclick="update()">Update</a> | <a onclick="unmute()">Unmute</a>
 			 | <a id="theme-switch" onclick="changeTheme()">Make it light</a> | <span id="status"></span>
 			<textarea autofocus></textarea>
+			<input type="file" style="display: none;" id="files" multiple accept="image/*,video/*,audio/*"></input>
 		</div>
 	</body>
 	<script src="js/main.js"></script>
