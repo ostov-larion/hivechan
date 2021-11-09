@@ -229,11 +229,12 @@ button:hover, button:active {
 }
 
 textarea {
-    background-color: #222;
+    background-color: #333;
     color: #fafafa;
-    width: 95%;
+    width: 100%;
     resize: none;
     border: none;
+    border-radius: 4px;
     height: 30%;
     font-family: Menlo, Monaco, "Courier New", monospace;
     font-size: 1rem;
