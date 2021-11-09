@@ -41,7 +41,7 @@
 		</header>
 		<main></main>
 		<div class="post">
-			<b>New Post</b> <a onclick="send()">Send</a> & <a id="pin-files" onclick="document.getElementById('files').click()">Pin files</a> | <a onclick="update()">Update</a> | <a onclick="unmute()">Unmute</a>
+			<b>New Post</b> <a onclick="send()">Send</a> & <a id="pin-files" onclick="document.getElementById('files').click()">Pin files</a> | <a onclick="update()">Update</a> & <a id="au-switch" onclick="switchAutoupdate()">Autoupdate Off</a> | <a onclick="unmute()">Unmute</a>
 			 | <a id="theme-switch" onclick="changeTheme()">Make it light</a> | <span id="status"></span>
 			<textarea autofocus></textarea>
 			<input type="file" onchange="document.getElementById('pin-files').innerText = `Pin files (${document.getElementById('files').files.length} pined)`" style="display: none;" id="files" multiple accept="image/*,video/*,audio/*"></input>

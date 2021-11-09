@@ -7,6 +7,36 @@ if(!localStorage.bl) {
     localStorage.bl = "[]"
 }
 
+if(!localStorage.autoupdate) {
+    localStorage.autoupdate = "off"
+}
+
+document.getElementById("au-switch").innerText = `Autoupdate ${localStorage.autoupdate == "on" ? "On" : "Off"}`
+
+switchAutoupdate = () => {
+    let au = document.getElementById("au-switch")
+    if(localStorage.autoupdate == "off") {
+        localStorage.autoupdate = "on"
+        au.innerText = "Autoupdate On"
+        startTimer()
+    }
+    else {
+        localStorage.autoupdate = "off"
+        au.innerText = "Autoupdate Off"
+        stopTimer()
+    }
+}
+
+startTimer = () => {
+    timer = setInterval(async () => {let oldDB = db; await update(); npi(oldDB)}, 60 * 1000)
+}
+
+stopTimer = () => {
+    clearInterval(timer)
+}
+
+if(localStorage.autoupdate == "on") startTimer()
+
 document.getElementById("theme-switch").innerText = `Make it ${localStorage.theme == "dark" ? "light" : "dark"}`
 
 let md = markdownIt({
@@ -119,6 +149,12 @@ send = () => {
 
 openStorageWindow = () => {
     window.open("storage.html","Storage",'width=600,height=400')
+}
+
+npi = oldDB => {
+    let np = db.length - oldDB.length
+    if(np != 0) document.querySelector("title").innerText = `Hivechan | ${np} new posts``
+    window.onfocus = () => document.querySelector("title").innerText = "Hivechan"
 }
 
 await update()
