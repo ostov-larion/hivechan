@@ -114,6 +114,7 @@ send = () => {
     }
     uploadPost(document.querySelector("textarea").value)
     document.querySelector("textarea").value = ""
+    document.getElementById('pin-files').innerText = "Pin files"
 }
 
 openStorageWindow = () => {
