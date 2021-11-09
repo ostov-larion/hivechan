@@ -153,7 +153,7 @@ openStorageWindow = () => {
 
 npi = oldDB => {
     let np = db.length - oldDB.length
-    if(np != 0) document.querySelector("title").innerText = `Hivechan | ${np} new posts``
+    if(np != 0) document.querySelector("title").innerText = `Hivechan | ${np} new posts`
     window.onfocus = () => document.querySelector("title").innerText = "Hivechan"
 }
 
