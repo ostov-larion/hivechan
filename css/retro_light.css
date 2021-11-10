@@ -227,6 +227,7 @@ button:hover, button:active {
 .post {
     padding-left: 1rem;
     margin: 5px;
+    margin-bottom: 40px;
     border-left: 2px dashed lightcoral;
 }
 
