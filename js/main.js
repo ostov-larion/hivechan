@@ -51,8 +51,6 @@ let md = markdownIt({
         audioAttrs: "preload=metadata"
     })
 
-const date = () => new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
-
 let post = (msg, files, num, time) =>
     `<div class="post">
         <b>Anonymous</b> <a name="${num}" onclick="linkClick(${num})">#${num}</a> <span style="color: gray">${time}</span> <a onclick="mute(${num})">Mute!</a>
@@ -70,7 +68,7 @@ let renderPosts = posts => document.querySelector("main").innerHTML =
     posts.map(({msg, time, poster, files}, num) => JSON.stringify(localStorage.bl).includes(poster) ? "<div class='post'>(Скрыт)</div>" : post(msg, files, num, time)).join("")
 
 update = async() => {
-    db = await (await fetch("https://api.jsonstorage.net/v1/json/c6ad7afd-b319-4909-8b41-bc5c6491bd1e", {method: "GET"})).json()
+    db = await (await fetch("https://hivechan.herokuapp.com/db", {method: "GET", 'cors': 'no-cors'})).json()
     renderPosts(db)
     document.querySelectorAll("img").forEach(img => img.onclick = () => window.open(img.src,img.alt,`width=${img.naturalWidth/2},height=${img.naturalHeight/2}, left=500, top=300`))
     document.querySelectorAll("video").forEach(img => img.onclick = () => window.open(img.src,img.alt,`width=${img.videoWidth},height=${img.videoHeight}`))
@@ -105,12 +103,12 @@ uploadFiles = async () => {
 uploadPost = async msg => {
     let files = await uploadFiles()
     await update()
-    fetch("https://api.jsonstorage.net/v1/json/c6ad7afd-b319-4909-8b41-bc5c6491bd1e?apiKey=8fb8b49c-e22c-4c05-84a5-caee09624a9d", {
-            method: "PUT",
+    fetch("https://hivechan.herokuapp.com/post", {
+            method: "POST",
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify([...db, {msg, files, time: date(), poster: localStorage.poster}])
+            body: JSON.stringify({msg, files, poster: localStorage.poster})
     }).then(() => update())
 }
 
