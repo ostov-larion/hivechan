@@ -134,7 +134,11 @@ window.onmousedown = () => {
 
 linkClick = num => {
     let value = document.querySelector('textarea').value
-    document.querySelector('textarea').value += `${value == "" ? "" : "\n"}[#${num}](#${num})\n> ${selection}\n\n`
+    document.querySelector('textarea').value += `${value == "" ? "" : "\n"}[#${num}](#${num})${selection != "" ? `\n> ${selection}\n` : ""}\n`
+    document.querySelector("textarea").style.display = "block"
+    document.getElementById("wrap").innerText = "Wrap form"
+    document.getElementById("content").style["max-height"] = "55%"
+    location.href = "#" + num
 }
 
 let debug = msg => console.log(msg) || true
