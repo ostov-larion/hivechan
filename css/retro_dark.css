@@ -247,10 +247,14 @@ a {
 }
 
 .answers {
-    padding-left: 1rem;
+    padding-left: 0.5rem;
     margin: 5px;
     margin-bottom: 40px;
     border-left: 2px dotted #01ff70;
+}
+
+.answers > p {
+    font-size: small;
 }
 
 .spoiler {
