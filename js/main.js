@@ -55,9 +55,9 @@ let post = (msg, files, num, time) =>
     `<div class="post">
         <b>Anonymous</b> <a name="${num}" onclick="linkClick(${num})">#${num}</a> <span style="color: gray">${time}</span> <a onclick="mute(${num})">Mute!</a>
         ${files ? "<br>" + files.map(file => {
-            if(file[1].match(/audio.*/))
+            if(file[1]?.match(/audio.*/))
                 return `<audio src="${file[0]}" preload="metadata"></audio>`
-            if(file[1].match(/video.*/))
+            if(file[1]?.match(/video.*/))
                 return `<video src="${file[0]}" preload="metadata"></video>`
             else return `<img src="${file[0]}"></img>`
         }).join(' ') : ""}
