@@ -258,11 +258,17 @@ a {
     color: #333;
 }
 
+.answers {
+    padding-left: 1rem;
+    margin: 5px;
+    margin-bottom: 40px;
+    border-left: 2px dotted lightcoral;
+}
 
 #content {
     max-height: 55%;
     overflow: auto;
-    transition: 1s all;
+    /*transition: 1s all;*/
 }
 
 #form {

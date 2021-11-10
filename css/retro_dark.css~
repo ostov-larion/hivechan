@@ -246,13 +246,6 @@ a {
   cursor: pointer;
 }
 
-.answers {
-    padding-left: 1rem;
-    margin: 5px;
-    margin-bottom: 40px;
-    border-left: 2px dotted #01ff70;
-}
-
 .spoiler {
     background-color: #333;
     color: #333;

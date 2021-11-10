@@ -1,7 +1,7 @@
 (async() => {
 
 if(!localStorage.poster) {
-    localStorage.poster = Math.floor(Math.random() * 1000000 * 100000)
+    localStorage.poster = Math.floor(Math.random() * 1000000)
 }
 if(!localStorage.bl) {
     localStorage.bl = "[]"
@@ -62,7 +62,6 @@ let post = (msg, files, num, time) =>
             else return `<img src="${file[0]}"></img>`
         }).join(' ') : ""}
         ${md.render(msg)}
-        <div class="answers">${md.render(db.map((post, i) => [post, i]).filter(post => post[0].msg.indexOf(`[#${num}](#${num})`) > -1).map(post => `[#${post[1]}](#${post[1]})`).join(' '))}</div>
     </div>`
 
 let db
@@ -133,12 +132,7 @@ window.onmousedown = () => {
 
 linkClick = num => {
     let value = document.querySelector('textarea').value
-    document.querySelector('textarea').value += `${value == "" ? "" : "\n"}[#${num}](#${num})${selection != "" ? `\n> ${selection}\n` : ""}\n`
-    document.querySelector("textarea").style.display = "block"
-    document.getElementById("wrap").innerText = "Wrap form"
-    document.getElementById("content").style["max-height"] = "55%"
-    document.getElementById("content").scrollTop += document.getElementById("form").clientHeight
-    location.href = "#" + num
+    document.querySelector('textarea').value += `${value == "" ? "" : "\n"}[#${num}](#${num})\n> ${selection}\n\n`
 }
 
 let debug = msg => console.log(msg) || true
@@ -155,19 +149,6 @@ send = () => {
 
 openStorageWindow = () => {
     window.open("storage.html","Storage",'width=600,height=400')
-}
-
-wrapForm = () => {
-    if(document.querySelector("textarea").style.display != "none") {
-        document.querySelector("textarea").style.display = "none"
-        document.getElementById("wrap").innerText = "Unwrap form"
-        document.getElementById("content").style["max-height"] = "85%"
-    }
-    else {
-        document.querySelector("textarea").style.display = "block"
-        document.getElementById("wrap").innerText = "Wrap form"
-        document.getElementById("content").style["max-height"] = "55%"
-    }
 }
 
 npi = oldDB => {
