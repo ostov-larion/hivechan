@@ -1,7 +1,7 @@
 (async() => {
 
 if(!localStorage.poster) {
-    localStorage.poster = Math.floor(Math.random() * 1000000)
+    localStorage.poster = Math.floor(Math.random() * 1000000 * 100000)
 }
 if(!localStorage.bl) {
     localStorage.bl = "[]"
@@ -72,8 +72,6 @@ let renderPosts = posts => document.querySelector("main").innerHTML =
 update = async() => {
     db = await (await fetch("https://hivechan.herokuapp.com/db", {method: "GET", 'cors': 'no-cors'})).json()
     renderPosts(db)
-    document.getElementById("status").innerHTML=
-    `<a onclick = 'document.getElementById("content").scrollTop = document.getElementById("content").scrollHeight; document.getElementById("status").innerText = "";'>Scroll to new posts</a>`
     document.querySelectorAll("img").forEach(img => img.onclick = () => window.open(img.src,img.alt,`width=${img.naturalWidth/2},height=${img.naturalHeight/2}, left=500, top=300`))
     document.querySelectorAll("video").forEach(img => img.onclick = () => window.open(img.src,img.alt,`width=${img.videoWidth},height=${img.videoHeight}`))
 }
@@ -138,6 +136,7 @@ linkClick = num => {
     document.querySelector("textarea").style.display = "block"
     document.getElementById("wrap").innerText = "Wrap form"
     document.getElementById("content").style["max-height"] = "55%"
+    document.getElementById("content").scrollTop += document.getElementById("form").clientHeight
     location.href = "#" + num
 }
 

@@ -40,12 +40,13 @@
 			<h1>Hivechan</h1>
 			<i>Общение и всё такое.</i>
 		</header>
+		<a id="theme-switch" onclick="changeTheme()">Make it light</a> | <a onclick="unmute()">Unmute</a> | <a id="au-switch" onclick="switchAutoupdate()">Autoupdate Off</a>
+		<hr>
 		<main></main>
 		</div>
 		<hr>
 		<div id="form" class="post">
-			<b>New Post</b> <a onclick="send()">Send</a> & <a id="pin-files" onclick="document.getElementById('files').click()">Pin files</a> | <a onclick="update()">Update</a> & <a id="au-switch" onclick="switchAutoupdate()">Autoupdate Off</a> | <a onclick="unmute()">Unmute</a>
-			 | <a id="theme-switch" onclick="changeTheme()">Make it light</a> | <a id="wrap" onclick="wrapForm()">Wrap form</a> | <span id="status"></span>
+			<b>New Post</b> <a onclick="send()">Send</a> & <a id="pin-files" onclick="document.getElementById('files').click()">Pin files</a> | <a onclick="update()">Update</a> | <a id="wrap" onclick="wrapForm()">Wrap form</a> | <a onclick = 'document.getElementById("content").scrollTop = document.getElementById("content").scrollHeight;'>Scroll to bottom</a> | <span id="status"></span>
 			<textarea autofocus></textarea>
 			<input type="file" onchange="document.getElementById('pin-files').innerText = `Pin files (${document.getElementById('files').files.length} pined)`" style="display: none;" id="files" multiple accept="image/*,video/*,audio/*"></input>
 		</div>
