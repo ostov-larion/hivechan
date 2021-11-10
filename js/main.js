@@ -64,12 +64,16 @@ let post = (msg, files, num, time) =>
         ${md.render(msg)}
     </div>`
 
+let db
+
 let renderPosts = posts => document.querySelector("main").innerHTML =
     posts.map(({msg, time, poster, files}, num) => JSON.stringify(localStorage.bl).includes(poster) ? "<div class='post'>(Скрыт)</div>" : post(msg, files, num, time)).join("")
 
 update = async() => {
     db = await (await fetch("https://hivechan.herokuapp.com/db", {method: "GET", 'cors': 'no-cors'})).json()
     renderPosts(db)
+    document.getElementById("status").innerHTML=
+    `<a onclick = 'document.getElementById("content").scrollTop = document.getElementById("content").scrollHeight; document.getElementById("status").innerText = "";'>Scroll to new posts</a>`
     document.querySelectorAll("img").forEach(img => img.onclick = () => window.open(img.src,img.alt,`width=${img.naturalWidth/2},height=${img.naturalHeight/2}, left=500, top=300`))
     document.querySelectorAll("video").forEach(img => img.onclick = () => window.open(img.src,img.alt,`width=${img.videoWidth},height=${img.videoHeight}`))
 }
@@ -147,6 +151,19 @@ send = () => {
 
 openStorageWindow = () => {
     window.open("storage.html","Storage",'width=600,height=400')
+}
+
+wrapForm = () => {
+    if(document.querySelector("textarea").style.display != "none") {
+        document.querySelector("textarea").style.display = "none"
+        document.getElementById("wrap").innerText = "Unwrap form"
+        document.getElementById("content").style["max-height"] = "85%"
+    }
+    else {
+        document.querySelector("textarea").style.display = "block"
+        document.getElementById("wrap").innerText = "Wrap form"
+        document.getElementById("content").style["max-height"] = "55%"
+    }
 }
 
 npi = oldDB => {

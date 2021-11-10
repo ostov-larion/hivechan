@@ -258,6 +258,21 @@ a {
     color: #333;
 }
 
+
+#content {
+    max-height: 55%;
+    overflow: auto;
+    transition: 1s all;
+}
+
+#form {
+    margin-top: 20px;
+}
+
+hr {
+    border-color: lightcoral;
+}
+
 ::-webkit-scrollbar{
   width: 5px;
   height: 7px;

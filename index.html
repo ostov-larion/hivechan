@@ -35,14 +35,17 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	</head>
 	<body>
+		<div id="content">
 		<header>
 			<h1>Hivechan</h1>
 			<i>Общение и всё такое.</i>
 		</header>
 		<main></main>
-		<div class="post">
+		</div>
+		<hr>
+		<div id="form" class="post">
 			<b>New Post</b> <a onclick="send()">Send</a> & <a id="pin-files" onclick="document.getElementById('files').click()">Pin files</a> | <a onclick="update()">Update</a> & <a id="au-switch" onclick="switchAutoupdate()">Autoupdate Off</a> | <a onclick="unmute()">Unmute</a>
-			 | <a id="theme-switch" onclick="changeTheme()">Make it light</a> | <span id="status"></span>
+			 | <a id="theme-switch" onclick="changeTheme()">Make it light</a> | <a id="wrap" onclick="wrapForm()">Wrap form</a> | <span id="status"></span>
 			<textarea autofocus></textarea>
 			<input type="file" onchange="document.getElementById('pin-files').innerText = `Pin files (${document.getElementById('files').files.length} pined)`" style="display: none;" id="files" multiple accept="image/*,video/*,audio/*"></input>
 		</div>
