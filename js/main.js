@@ -11,6 +11,9 @@ if(!localStorage.autoupdate) {
     localStorage.autoupdate = "off"
 }
 
+let page = 0;
+location.hash = ""
+
 document.getElementById("au-switch").innerText = `Autoupdate ${localStorage.autoupdate == "on" ? "On" : "Off"}`
 
 switchAutoupdate = () => {
@@ -68,7 +71,7 @@ let post = (msg, files, num, time) =>
 let db
 
 let renderPosts = posts => document.querySelector("main").innerHTML =
-    posts.map(({msg, time, poster, files}, num) => JSON.stringify(localStorage.bl).includes(poster) ? "<div class='post'>(Скрыт)</div>" : post(msg, files, num, time)).join("")
+    chunk(posts, 500).reverse()[page].map(({msg, time, poster, files}, num) => JSON.stringify(localStorage.bl).includes(poster) ? "<div class='post'>(Скрыт)</div>" : post(msg, files, ((chunk(posts, 500).length - 1 - page) * 500) + num, time)).join("")
 
 update = async() => {
     db = await (await fetch("https://hivechan.herokuapp.com/db", {method: "GET", 'cors': 'no-cors'})).json()
@@ -170,10 +173,43 @@ wrapForm = () => {
     }
 }
 
+chunk = (arr, perChunk) =>
+    arr.reduce((all,one,i) => {
+       const ch = Math.floor(i/perChunk);
+       all[ch] = [].concat((all[ch]||[]),one);
+       return all
+    }, [])
+
 npi = oldDB => {
     let np = db.length - oldDB.length
     if(np != 0) document.querySelector("title").innerText = `Hivechan | ${np} new posts`
     window.onfocus = () => document.querySelector("title").innerText = "Hivechan"
+}
+
+window.onhashchange = () => {
+    let p = Number(location.hash.match(/#page:([0-9]+)/)?.[1])
+    if(p && p < chunk(db, 500)) {
+        page = p
+        renderPosts(db)
+        document.querySelectorAll("img").forEach(img => img.onclick = () => window.open(img.src,img.alt,`width=${img.naturalWidth/2},height=${img.naturalHeight/2}, left=500, top=300`))
+        document.querySelectorAll("video").forEach(img => img.onclick = () => window.open(img.src,img.alt,`width=${img.videoWidth},height=${img.videoHeight}`))
+    }
+}
+
+prevPage = () => {
+        location.href = `#page:${page++}`
+        renderPosts(db)
+        document.querySelectorAll("img").forEach(img => img.onclick = () => window.open(img.src,img.alt,`width=${img.naturalWidth/2},height=${img.naturalHeight/2}, left=500, top=300`))
+        document.querySelectorAll("video").forEach(img => img.onclick = () => window.open(img.src,img.alt,`width=${img.videoWidth},height=${img.videoHeight}`))
+}
+
+nextPage = () => {
+    if(page > 0) {
+        location.href = `#page:${page--}`
+        renderPosts(db)
+        document.querySelectorAll("img").forEach(img => img.onclick = () => window.open(img.src,img.alt,`width=${img.naturalWidth/2},height=${img.naturalHeight/2}, left=500, top=300`))
+        document.querySelectorAll("video").forEach(img => img.onclick = () => window.open(img.src,img.alt,`width=${img.videoWidth},height=${img.videoHeight}`))
+        }
 }
 
 await update()
