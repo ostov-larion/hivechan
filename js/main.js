@@ -1,8 +1,9 @@
 (async() => {
 
-if(!localStorage.poster) {
-    localStorage.poster = Math.floor(Math.random() * 1000000 * 100000)
-}
+let hash = str => Array.from(str).reduce((hash, char) => 0 | (31 * hash + char.charCodeAt(0)), 0)
+
+localStorage.poster = hash(JSON.stringify({ua: navigator.userAgent, lang: navigator.language, screen: [screen.width, screen.height], touch: navigator.maxTouchPoints}))
+
 if(!localStorage.bl) {
     localStorage.bl = "[]"
 }
