@@ -71,13 +71,13 @@ let post = (msg, files, num, time) =>
 let db
 
 let renderPosts = (posts, pages) => document.querySelector("main").innerHTML =
-    posts.map(({msg, time, poster, files}, num) => JSON.stringify(localStorage.bl).includes(poster) ? "<div class='post'>(Скрыт)</div>" : post(msg, files, ((pages.length - 1 - page) * 500) + num, time)).join("")
+    posts.map(({msg, time, poster, files}, num) => JSON.stringify(localStorage.bl).includes(poster) ? "<div class='post'>(Скрыт)</div>" : post(msg, files, ((pages - page - 1) * 500) + num, time)).join("")
 
 update = async() => {
     db = await (await fetch("https://hivechan.herokuapp.com/db", {method: "GET", 'cors': 'no-cors'})).json()
     let pages = chunk(db, 500).reverse()
     let pg = pages[page]
-    renderPosts(pg, pages)
+    renderPosts(pg, pages.length)
     document.querySelectorAll("img").forEach(img => img.onclick = () => window.open(img.src,img.alt,`width=${img.naturalWidth/2},height=${img.naturalHeight/2}, left=500, top=300`))
     document.querySelectorAll("video").forEach(img => img.onclick = () => window.open(img.src,img.alt,`width=${img.videoWidth},height=${img.videoHeight}`))
 }
@@ -200,7 +200,9 @@ window.onhashchange = () => {
 
 prevPage = () => {
         location.href = `#page:${page++}`
-        renderPosts(db)
+        let pages = chunk(db, 500).reverse()
+        let pg = pages[page]
+        renderPosts(pg, pages.length)
         document.querySelectorAll("img").forEach(img => img.onclick = () => window.open(img.src,img.alt,`width=${img.naturalWidth/2},height=${img.naturalHeight/2}, left=500, top=300`))
         document.querySelectorAll("video").forEach(img => img.onclick = () => window.open(img.src,img.alt,`width=${img.videoWidth},height=${img.videoHeight}`))
 }
@@ -208,7 +210,9 @@ prevPage = () => {
 nextPage = () => {
     if(page > 0) {
         location.href = `#page:${page--}`
-        renderPosts(db)
+        let pages = chunk(db, 500).reverse()
+        let pg = pages[page]
+        renderPosts(pg, pages.length)
         document.querySelectorAll("img").forEach(img => img.onclick = () => window.open(img.src,img.alt,`width=${img.naturalWidth/2},height=${img.naturalHeight/2}, left=500, top=300`))
         document.querySelectorAll("video").forEach(img => img.onclick = () => window.open(img.src,img.alt,`width=${img.videoWidth},height=${img.videoHeight}`))
         }
