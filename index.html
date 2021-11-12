@@ -1,0 +1,57 @@
+<html>
+	<head>
+		<title>Lolichan</title>
+		<meta charset="utf-8" />
+		<script src="js/markdown-it.js"></script>
+		<script src="js/markdown-it-media.js"></script>
+		<script src="js/markdown-it-spoiler.js"></script>
+		<link rel="stylesheet" id=theme href="css/retro_dark.css"/>
+		<link rel="shortcut icon" id="icon" href="favicon.svg" type="image/x-icon">
+		<script>
+		if(!localStorage.theme) {
+			localStorage.theme = "dark"
+		}
+
+		setTheme = () => {
+			if(localStorage.theme == "dark") {
+				document.getElementById("theme").href="css/retro_dark.css"
+				document.getElementById("icon").href="favicon.svg"
+			}
+			else {
+				document.getElementById("theme").href="css/retro_light.css"
+				document.getElementById("icon").href="favicon_coral.svg"
+			}
+		}
+
+		setTheme()
+
+		changeTheme = () => {
+			if(localStorage.theme == "dark") localStorage.theme = "light"
+			else localStorage.theme = "dark"
+			setTheme()
+			document.getElementById("theme-switch").innerText = `Make it ${localStorage.theme == "dark" ? "light" : "dark"}`
+		}
+		</script>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
+	<body>
+		<div id="content">
+		<header>
+			<h1>Lolichan</h1>
+			<i>Общение и всё такое.</i>
+		</header>
+		<a id="theme-switch" onclick="changeTheme()">Make it light</a> | <a onclick="unmute()">Unmute</a> | <a id="au-switch" onclick="switchAutoupdate()">Autoupdate Off</a>
+		<hr>
+		<a onclick="prevPage()">Previous page</a>
+		<main></main>
+		<a onclick="nextPage()">Next page</a>
+		</div>
+		<hr>
+		<div id="form" class="post">
+			<b>New Post</b> <a onclick="send()">Send</a> & <a id="pin-files" onclick="document.getElementById('files').click()">Pin files</a> | <a onclick="update()">Update</a> | <a id="wrap" onclick="wrapForm()">Wrap form</a> | <a onclick = 'document.getElementById("content").scrollTop = document.getElementById("content").scrollHeight;'>Scroll to bottom</a> | <span id="status"></span>
+			<textarea autofocus></textarea>
+			<input type="file" onchange="document.getElementById('pin-files').innerText = `Pin files (${document.getElementById('files').files.length} pined)`" style="display: none;" id="files" multiple accept="image/*,video/*,audio/*"></input>
+		</div>
+	</body>
+	<script src="js/main.js"></script>
+</html>
