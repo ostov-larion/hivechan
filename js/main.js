@@ -15,6 +15,8 @@ if(!localStorage.autoupdate) {
 let page = 0;
 location.hash = ""
 
+const date = () => new Date().toUTCString()
+
 document.getElementById("au-switch").innerText = `Autoupdate ${localStorage.autoupdate == "on" ? "On" : "Off"}`
 
 switchAutoupdate = () => {
@@ -75,7 +77,7 @@ let renderPosts = (posts, pages) => document.querySelector("main").innerHTML =
     posts.map(({msg, time, poster, files}, num) => JSON.stringify(localStorage.bl).includes(poster) ? "<div class='post'>(Скрыт)</div>" : post(msg, files, ((pages - page - 1) * 500) + num, time)).join("")
 
 update = async() => {
-    db = await (await fetch("https://hivechan.herokuapp.com/db", {method: "GET", 'cors': 'no-cors'})).json()
+    db = await (await fetch("https://api.jsonstorage.net/v1/json/c6ad7afd-b319-4909-8b41-bc5c6491bd1e", {method: "GET"})).json()
     let pages = chunk(db, 500).reverse()
     let pg = pages[page]
     renderPosts(pg, pages.length)
@@ -112,12 +114,12 @@ uploadFiles = async () => {
 uploadPost = async msg => {
     let files = await uploadFiles()
     await update()
-    fetch("https://hivechan.herokuapp.com/post", {
-            method: "POST",
+fetch("https://api.jsonstorage.net/v1/json/c6ad7afd-b319-4909-8b41-bc5c6491bd1e?apiKey=8fb8b49c-e22c-4c05-84a5-caee09624a9d", {
+            method: "PUT",
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({msg, files, poster: localStorage.poster})
+            body: JSON.stringify([...db, {msg: msg, files: files, time: date(), poster: localStorage.poster, n: db.length}])
     }).then(() => update())
 }
 
